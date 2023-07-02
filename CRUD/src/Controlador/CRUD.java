@@ -1,11 +1,11 @@
 package Controlador;
 
 import Vista.Dashboard;
-import Modelo.DaoModelo;
+import Modelo.Conexion;
 
 public class CRUD {
      Dashboard view= new Dashboard();
-     DaoModelo model = new DaoModelo();
+     Conexion model = new Conexion();
     public CRUD() {
        
     }
