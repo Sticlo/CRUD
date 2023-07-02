@@ -1,13 +1,13 @@
 
-package Vista.views;
+package Vista;
 
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class Compras extends javax.swing.JPanel {
+public class Ventas extends javax.swing.JPanel {
 
-    public Compras() {
+    public Ventas() {
         initComponents();
     }
 
@@ -26,7 +26,7 @@ public class Compras extends javax.swing.JPanel {
 
         BIENVENIDOS.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         BIENVENIDOS.setForeground(new java.awt.Color(0, 0, 0));
-        BIENVENIDOS.setText(" ¡Bienvenido(a) a la seccion Compras!");
+        BIENVENIDOS.setText(" ¡Bienvenido(a) a la seccion Ventas!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

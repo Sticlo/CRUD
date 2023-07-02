@@ -1,5 +1,5 @@
 
-package Vista.views;
+package Vista;
 
 import java.awt.Window;
 import javax.swing.JFrame;

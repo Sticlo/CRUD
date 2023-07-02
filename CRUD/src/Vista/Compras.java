@@ -1,13 +1,13 @@
 
-package Vista.views;
+package Vista;
 
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class Consultas extends javax.swing.JPanel {
+public class Compras extends javax.swing.JPanel {
 
-    public Consultas() {
+    public Compras() {
         initComponents();
     }
 
@@ -26,7 +26,7 @@ public class Consultas extends javax.swing.JPanel {
 
         BIENVENIDOS.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         BIENVENIDOS.setForeground(new java.awt.Color(0, 0, 0));
-        BIENVENIDOS.setText(" ¡Bienvenido(a) a la seccion de Consultas!");
+        BIENVENIDOS.setText(" ¡Bienvenido(a) a la seccion Compras!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -34,8 +34,8 @@ public class Consultas extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(330, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
