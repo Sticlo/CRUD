@@ -4,36 +4,56 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class ConsultasPersona extends Conexion {
-
+    
     public boolean registrar(Persona pe) {
-        PreparedStatement ps = null;
-        Connection con = getConexion();
+    PreparedStatement ps = null;
+    Connection con = getConexion();
 
-        String sql = "INSERT INTO persona (nombre,apellido) VALUES (?,?)";
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, pe.getNombre());
-            ps.setString(2, pe.getApellido());
-            ps.execute();
-            return true;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR" + e);
-            return false;
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR" + e);
+    // Verificar si la cédula ya existe en la tabla
+    String verificarSql = "SELECT COUNT(*) FROM persona WHERE id = ?";
+    try {
+        ps = con.prepareStatement(verificarSql);
+        ps.setInt(1, pe.getId());
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            if (count > 0) {
+                JOptionPane.showMessageDialog(null, "La cédula ya existe en la base de datos");
+                return false;
             }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al verificar la cédula" + e);
+        return false;
+    }
 
+    // Insertar el nuevo registro
+    String sql = "INSERT INTO persona (id, nombre, apellido) VALUES (?, ?, ?)";
+    try {
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, pe.getId());
+        ps.setString(2, pe.getNombre());
+        ps.setString(3, pe.getApellido());
+        ps.execute();
+        return true;
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR" + e);
+        return false;
+    } finally {
+        try {
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR LA CONEXIÓN" + e);
         }
     }
+}
+
     
     public boolean modificar(Persona pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
-        String sql = "UPDATE persona SET nombre=?,apellido=? WHERE id=? ";
+        String sql = "UPDATE persona SET nombre=?, apellido=? WHERE id=? ";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, pe.getNombre());
@@ -42,15 +62,14 @@ public class ConsultasPersona extends Conexion {
             ps.execute();
             return true; 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR" + e);
+            JOptionPane.showMessageDialog(null, "NO SE PUDO MODIFICAR" + e);
             return false;
         } finally {
             try {
                 con.close();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR" + e);
+                JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR LA CONEXIÓN" + e);
             }
-
         }
     }
     
@@ -71,41 +90,38 @@ public class ConsultasPersona extends Conexion {
             try {
                 con.close();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR" + e);
+                JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR LA CONEXIÓN" + e);
             }
-
         }
     }
     
     public boolean buscar(Persona pe) {
         PreparedStatement ps = null;
-        ResultSet rs= null;
+        ResultSet rs = null;
         Connection con = getConexion();
 
         String sql = "SELECT * FROM persona WHERE nombre=? ";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, pe.nombre);
-            rs=ps.executeQuery();
+            rs = ps.executeQuery();
             
-            if (rs.next())
-            {
-               pe.setId(Integer.parseInt(rs.getString("id")));
-               pe.setNombre(rs.getString("nombre"));
-               pe.setApellido(rs.getString("apellido"));
-               return true;
+            if (rs.next()) {
+                pe.setId(Integer.parseInt(rs.getString("id")));
+                pe.setNombre(rs.getString("nombre"));
+                pe.setApellido(rs.getString("apellido"));
+                return true;
             }
             return false; 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR" + e);
+            JOptionPane.showMessageDialog(null, "NO SE PUDO BUSCAR" + e);
             return false;
         } finally {
             try {
                 con.close();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR" + e);
+                JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR LA CONEXIÓN" + e);
             }
-
         }
     }
 }

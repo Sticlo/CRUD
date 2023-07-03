@@ -16,7 +16,7 @@ public class CtrlPersona implements ActionListener {
         this.mod = mod;
         this.modC = modC;
         this.frm = frm;
-        
+
         this.frm.btnBuscar.addActionListener(this);
         this.frm.btnGuardar.addActionListener(this);
         this.frm.btnModificar.addActionListener(this);
@@ -27,7 +27,7 @@ public class CtrlPersona implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(frm.btnGuardar)) {
-            JOptionPane.showMessageDialog(null, "registroooox");
+            mod.setId(Integer.parseInt(frm.txtid.getText())); // Asigna el valor del campo txtid al ID de mod
             mod.setNombre(frm.txtnombre.getText());
             mod.setApellido(frm.txtapellido.getText());
             if (modC.registrar(mod)) {
@@ -39,7 +39,6 @@ public class CtrlPersona implements ActionListener {
             }
         }
         if (e.getSource().equals(frm.btnModificar)) {
-            JOptionPane.showMessageDialog(null, "registrooooxdddd");
             mod.setId(Integer.parseInt(frm.txtid.getText()));
             mod.setNombre(frm.txtnombre.getText());
             mod.setApellido(frm.txtapellido.getText());
@@ -47,31 +46,28 @@ public class CtrlPersona implements ActionListener {
                 JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO");
                 limpiar();
             } else {
-                JOptionPane.showMessageDialog(null, "REGISTRO FALLIDO");
+                JOptionPane.showMessageDialog(null, "MODIFICACIÓN FALLIDA");
                 limpiar();
             }
         }
         if (e.getSource() == frm.btnEliminar) {
             mod.setId(Integer.parseInt(frm.txtid.getText()));
-
             if (modC.eliminar(mod)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO ELIMINADO");
                 limpiar();
             } else {
-                JOptionPane.showMessageDialog(null, "ELIMINADO FALLIDO");
+                JOptionPane.showMessageDialog(null, "ELIMINACIÓN FALLIDA");
                 limpiar();
             }
         }
         if (e.getSource() == frm.btnBuscar) {
             mod.setNombre(frm.txtnombre.getText());
-
             if (modC.buscar(mod)) {
                 frm.txtid.setText(String.valueOf(mod.getId()));
                 frm.txtnombre.setText(mod.getNombre());
                 frm.txtapellido.setText(mod.getApellido());
-
             } else {
-                JOptionPane.showMessageDialog(null, "ELIMINADO FALLIDO");
+                JOptionPane.showMessageDialog(null, "BÚSQUEDA FALLIDA");
                 limpiar();
             }
         }

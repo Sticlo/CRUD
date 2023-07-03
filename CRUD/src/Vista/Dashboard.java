@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import java.awt.BorderLayout;
@@ -12,15 +9,9 @@ import java.util.Arrays;
 import java.util.Locale;
 import javax.swing.JPanel;
 
-/**
- *
- * @author kofix
- */
 public class Dashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Background
-     */
+
     public Dashboard() {
         initComponents();
         SetDate();

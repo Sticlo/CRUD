@@ -9,9 +9,7 @@ public class CRUD {
     Conexion model = new Conexion();
 
     public CRUD() {
-
     }
-
     public void iniciar() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
