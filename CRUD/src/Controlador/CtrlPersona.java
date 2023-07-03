@@ -27,15 +27,23 @@ public class CtrlPersona implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(frm.btnGuardar)) {
-            mod.setId(Integer.parseInt(frm.txtid.getText())); // Asigna el valor del campo txtid al ID de mod
-            mod.setNombre(frm.txtnombre.getText());
-            mod.setApellido(frm.txtapellido.getText());
-            if (modC.registrar(mod)) {
-                JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
-                limpiar();
+            String nombre = frm.txtnombre.getText();
+            String apellido = frm.txtapellido.getText();
+
+            if (nombre.isEmpty() || apellido.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
             } else {
-                JOptionPane.showMessageDialog(null, "REGISTRO FALLIDO");
-                limpiar();
+                mod.setId(Integer.parseInt(frm.txtid.getText())); // Asigna el valor del campo txtid al ID de mod
+                mod.setNombre(nombre);
+                mod.setApellido(apellido);
+
+                if (modC.registrar(mod)) {
+                    JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "REGISTRO FALLIDO");
+                    limpiar();
+                }
             }
         }
         if (e.getSource().equals(frm.btnModificar)) {

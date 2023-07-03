@@ -2,6 +2,7 @@ package Modelo;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ConsultasPersona extends Conexion {
     
@@ -121,6 +122,45 @@ public class ConsultasPersona extends Conexion {
                 con.close();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR LA CONEXIÓN" + e);
+            }
+        }
+    }
+    
+    public boolean tabla(Persona pe) {
+        DefaultTableModel modelo=new DefaultTableModel ();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = getConexion();
+
+        String sql = "SELECT id,nombre,apellido FROM persona";
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            ResultSetMetaData rsMd =rs.getMetaData();
+            int cantidadColumnas=rsMd.getColumnCount();
+            modelo.addColumn("ID");
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("APELLIDO");
+
+
+            while (rs.next()){
+                Object[] filas=new Object [cantidadColumnas];
+                for(int i=0;i<cantidadColumnas;i++)
+                {
+                    filas[i]=rs.getObject(i+1);
+                }
+                modelo.addRow(filas);
+            }
+            return true; 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "NO SE PUDO BUSCAR" + e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR LA CONEXIÓN" + e);
+                return false;
             }
         }
     }
