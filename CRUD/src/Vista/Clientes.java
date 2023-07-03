@@ -189,8 +189,8 @@ public class Clientes extends javax.swing.JPanel {
             .addComponent(content, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-        
-
+ 
+    
      private void ShowJPanel(JPanel p){
         p.setSize(795, 640);
         p.setLocation(0, 0);
@@ -201,7 +201,7 @@ public class Clientes extends javax.swing.JPanel {
     
     }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -1,12 +1,16 @@
 package Modelo;
 
+
+import java.sql.ResultSet;
+import java.awt.List;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ConsultasPersona extends Conexion {
     
-    public boolean registrar(Persona pe) {
+    public boolean registrar(   Persona pe) {
     PreparedStatement ps = null;
     Connection con = getConexion();
 
@@ -101,10 +105,10 @@ public class ConsultasPersona extends Conexion {
         ResultSet rs = null;
         Connection con = getConexion();
 
-        String sql = "SELECT * FROM persona WHERE nombre=? ";
+        String sql = "SELECT * FROM persona WHERE id=? ";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, pe.nombre);
+            ps.setInt(1, pe.id);
             rs = ps.executeQuery();
             
             if (rs.next()) {
@@ -126,42 +130,46 @@ public class ConsultasPersona extends Conexion {
         }
     }
     
-    public boolean tabla(Persona pe) {
-        DefaultTableModel modelo=new DefaultTableModel ();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Connection con = getConexion();
+    public ArrayList<Persona> obtenerTodos() {
+        ArrayList<Persona> personas = new ArrayList<>();
 
-        String sql = "SELECT id,nombre,apellido FROM persona";
         try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            ResultSetMetaData rsMd =rs.getMetaData();
-            int cantidadColumnas=rsMd.getColumnCount();
-            modelo.addColumn("ID");
-            modelo.addColumn("NOMBRE");
-            modelo.addColumn("APELLIDO");
+            // Obtener la conexión de la clase padre (Conexion en este ejemplo)
+            Connection conn = getConexion();
 
+            // Crear una consulta SELECT *
+            String sql = "SELECT * FROM persona";
 
-            while (rs.next()){
-                Object[] filas=new Object [cantidadColumnas];
-                for(int i=0;i<cantidadColumnas;i++)
-                {
-                    filas[i]=rs.getObject(i+1);
-                }
-                modelo.addRow(filas);
+            // Crear un Statement para ejecutar la consulta
+            Statement statement = conn.createStatement();
+
+            // Ejecutar la consulta y obtener el resultado en un ResultSet
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Iterar sobre el ResultSet y crear objetos Persona
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                String nombre = resultSet.getString("NOMBRE");
+                String apellido = resultSet.getString("APELLIDO");
+
+                // Crear un objeto Persona con los datos obtenidos
+                Persona persona = new Persona();
+                persona.setId(id);
+                persona.setNombre(nombre);
+                persona.setApellido(apellido);
+
+                personas.add(persona);
             }
-            return true; 
+
+            // Cerrar los recursos utilizados
+            resultSet.close();
+            statement.close();
+            // No se cierra la conexión aquí, ya que se obtiene de la clase padre
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO BUSCAR" + e);
-            return false;
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR LA CONEXIÓN" + e);
-                return false;
-            }
+            e.printStackTrace();
+            // Manejar la excepción según tus necesidades
         }
+
+        return personas;
     }
 }

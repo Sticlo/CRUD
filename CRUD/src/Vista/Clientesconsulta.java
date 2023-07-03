@@ -1,22 +1,55 @@
-
 package Vista;
 
 import javax.swing.JOptionPane;
 import Controlador.CtrlPersona;
+import Modelo.Conexion;
 import Modelo.ConsultasPersona;
 import Modelo.Persona;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
 
 public class Clientesconsulta extends javax.swing.JPanel {
+
     private CtrlPersona controlador;
-    
+
     public Clientesconsulta() {
         initComponents();
-    
+        try
+        {
+            DefaultTableModel modelo = new DefaultTableModel();
+            jtpersona.setModel(modelo);
+            
+            PreparedStatement ps =null; 
+            ResultSet rs =null;
+            Conexion conn=new Conexion();
+            Connection con= conn.getConexion();
+            
+            String sql= "SELECT id,nombre,apellido FROM persona";
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();   
+            
+            ResultSetMetaData rsMd=rs.getMetaData();
+            int cantidadColumnas =rsMd.getColumnCount();
+            
+            modelo.addColumn("ID");
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("APELLIDO");
+            
+            while(rs.next()){
+                Object[] filas =new Object[cantidadColumnas];
+                for(int i =0;i<cantidadColumnas;i++)
+                {
+                    filas[i]=rs.getObject(i+1);
+                }
+                modelo.addRow(filas);
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "NO SE ENCUENTRO NADIE");
+        }
+        
     }
-    
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -25,7 +58,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
         content = new javax.swing.JPanel();
         BIENVENIDOS = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtpersona = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(795, 640));
@@ -37,8 +70,8 @@ public class Clientesconsulta extends javax.swing.JPanel {
         BIENVENIDOS.setForeground(new java.awt.Color(0, 0, 0));
         BIENVENIDOS.setText("CLIENTES REGISTRADOS");
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtpersona.setBackground(new java.awt.Color(255, 255, 255));
+        jtpersona.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -64,7 +97,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtpersona);
 
         jButton1.setBackground(new java.awt.Color(0, 0, 153));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,18 +150,17 @@ public class Clientesconsulta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ShowJPanel( new Clientes());
+        ShowJPanel(new Clientes());
     }//GEN-LAST:event_jButton1ActionPerformed
-        
 
-     private void ShowJPanel(JPanel p){
+    private void ShowJPanel(JPanel p) {
         p.setSize(795, 640);
         p.setLocation(0, 0);
         content.removeAll();
-        content.add(p,BorderLayout.CENTER);
+        content.add(p, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -136,6 +168,6 @@ public class Clientesconsulta extends javax.swing.JPanel {
     public javax.swing.JPanel content;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable jtpersona;
     // End of variables declaration//GEN-END:variables
 }

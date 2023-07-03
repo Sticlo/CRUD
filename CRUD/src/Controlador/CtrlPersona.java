@@ -1,7 +1,8 @@
 package Controlador;
 
-import Modelo.*;
-import Vista.*;
+import Modelo.Persona;
+import Modelo.ConsultasPersona;
+import Vista.Clientes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class CtrlPersona implements ActionListener {
             if (nombre.isEmpty() || apellido.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
             } else {
-                mod.setId(Integer.parseInt(frm.txtid.getText())); // Asigna el valor del campo txtid al ID de mod
+                mod.setId(Integer.parseInt(frm.txtid.getText()));
                 mod.setNombre(nombre);
                 mod.setApellido(apellido);
 
@@ -69,7 +70,7 @@ public class CtrlPersona implements ActionListener {
             }
         }
         if (e.getSource() == frm.btnBuscar) {
-            mod.setNombre(frm.txtnombre.getText());
+            mod.setId(Integer.parseInt(frm.txtid.getText()));
             if (modC.buscar(mod)) {
                 frm.txtid.setText(String.valueOf(mod.getId()));
                 frm.txtnombre.setText(mod.getNombre());
