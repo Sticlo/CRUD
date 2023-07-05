@@ -48,15 +48,21 @@ public class CtrlPersona implements ActionListener {
             }
         }
         if (e.getSource().equals(frm.btnModificar)) {
-            mod.setId(Integer.parseInt(frm.txtid.getText()));
-            mod.setNombre(frm.txtnombre.getText());
-            mod.setApellido(frm.txtapellido.getText());
-            if (modC.modificar(mod)) {
-                JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO");
-                limpiar();
+            String nombre = frm.txtnombre.getText();
+            String apellido = frm.txtapellido.getText();
+            if (nombre.isEmpty() || apellido.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
             } else {
-                JOptionPane.showMessageDialog(null, "MODIFICACIÓN FALLIDA");
-                limpiar();
+                mod.setId(Integer.parseInt(frm.txtid.getText()));
+                mod.setNombre(frm.txtnombre.getText());
+                mod.setApellido(frm.txtapellido.getText());
+                if (modC.modificar(mod)) {
+                    JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO");
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "MODIFICACIÓN FALLIDA");
+                    limpiar();
+                }
             }
         }
         if (e.getSource() == frm.btnEliminar) {

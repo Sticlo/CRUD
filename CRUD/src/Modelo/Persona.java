@@ -1,7 +1,7 @@
-
 package Modelo;
 
 public class Persona {
+
     int id;
     String nombre;
     String apellido;
@@ -29,5 +29,4 @@ public class Persona {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    
 }

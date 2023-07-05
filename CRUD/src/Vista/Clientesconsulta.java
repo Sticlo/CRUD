@@ -16,39 +16,37 @@ public class Clientesconsulta extends javax.swing.JPanel {
 
     public Clientesconsulta() {
         initComponents();
-        try
-        {
+        try {
             DefaultTableModel modelo = new DefaultTableModel();
             jtpersona.setModel(modelo);
-            
-            PreparedStatement ps =null; 
-            ResultSet rs =null;
-            Conexion conn=new Conexion();
-            Connection con= conn.getConexion();
-            
-            String sql= "SELECT id,nombre,apellido FROM persona";
-            ps=con.prepareStatement(sql);
-            rs=ps.executeQuery();   
-            
-            ResultSetMetaData rsMd=rs.getMetaData();
-            int cantidadColumnas =rsMd.getColumnCount();
-            
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            Conexion conn = new Conexion();
+            Connection con = conn.getConexion();
+
+            String sql = "SELECT id,nombre,apellido FROM persona";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int cantidadColumnas = rsMd.getColumnCount();
+
             modelo.addColumn("ID");
             modelo.addColumn("NOMBRE");
             modelo.addColumn("APELLIDO");
-            
-            while(rs.next()){
-                Object[] filas =new Object[cantidadColumnas];
-                for(int i =0;i<cantidadColumnas;i++)
-                {
-                    filas[i]=rs.getObject(i+1);
+
+            while (rs.next()) {
+                Object[] filas = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    filas[i] = rs.getObject(i + 1);
                 }
                 modelo.addRow(filas);
             }
-        }catch(SQLException ex){
+        }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "NO SE ENCUENTRO NADIE");
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -162,7 +160,6 @@ public class Clientesconsulta extends javax.swing.JPanel {
         content.repaint();
 
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BIENVENIDOS;
     public javax.swing.JPanel content;

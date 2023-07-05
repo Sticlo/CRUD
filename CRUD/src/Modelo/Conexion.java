@@ -8,8 +8,8 @@ public class Conexion {
     private final String base = "proyecto_multi";
     private final String user = "root";
     private final String password = "123456";
-    private final String url = "jdbc:mysql://localhost:3306/"+base;
-    private final String driver="com.mysql.cj.jdbc.Driver";
+    private final String url = "jdbc:mysql://localhost:3306/" + base;
+    private final String driver = "com.mysql.cj.jdbc.Driver";
     private Connection con = null;
 
     public Connection getConexion() {
@@ -20,7 +20,7 @@ public class Conexion {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "NO SE PUDO CONECTAR CON LA BASE" + e);
         } catch (ClassNotFoundException ex) {
-             JOptionPane.showMessageDialog(null, "NO SE PUDO CONECTAR CON LA BASE" + ex);
+            JOptionPane.showMessageDialog(null, "NO SE PUDO CONECTAR CON LA BASE" + ex);
         }
         return con;
     }

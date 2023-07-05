@@ -1,4 +1,3 @@
-
 package Vista;
 
 import javax.swing.JOptionPane;
@@ -9,13 +8,14 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 public class Clientes extends javax.swing.JPanel {
+
     private CtrlPersona controlador;
-    
+
     public Clientes() {
         initComponents();
         Persona mod = new Persona();
         ConsultasPersona modC = new ConsultasPersona();
-        
+
         controlador = new CtrlPersona(mod, modC, this);
 
         btnBuscar.addActionListener(controlador);
@@ -23,10 +23,8 @@ public class Clientes extends javax.swing.JPanel {
         btnModificar.addActionListener(controlador);
         btnEliminar.addActionListener(controlador);
         btnLimpiar.addActionListener(controlador);
-        
-    }
-    
 
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -189,23 +187,22 @@ public class Clientes extends javax.swing.JPanel {
             .addComponent(content, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
- 
-    
-     private void ShowJPanel(JPanel p){
+
+    private void ShowJPanel(JPanel p) {
         p.setSize(795, 640);
         p.setLocation(0, 0);
         content.removeAll();
-        content.add(p,BorderLayout.CENTER);
+        content.add(p, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    
+
     }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      ShowJPanel( new Clientesconsulta());        
+        ShowJPanel(new Clientesconsulta());
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
