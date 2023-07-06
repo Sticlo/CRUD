@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ConsultasPersona extends Conexion {
+public class ConsultasCliente extends Conexion {
 
-    public boolean registrar(Persona pe) {
+    public boolean registrar(cliente pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
         // Verificar si la cédula ya existe en la tabla
-        String verificarSql = "SELECT COUNT(*) FROM persona WHERE id = ?";
+        String verificarSql = "SELECT COUNT(*) FROM cliente WHERE id_cliente = ?";
         try {
             ps = con.prepareStatement(verificarSql);
-            ps.setInt(1, pe.getId());
+            ps.setInt(1, pe.getId_cliente());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
@@ -30,12 +30,15 @@ public class ConsultasPersona extends Conexion {
             return false;
         }
         // Insertar el nuevo registro
-        String sql = "INSERT INTO persona (id, nombre, apellido) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO cliente (id_cliente, nombre, apellido,correo,genero,fecha_de_nacimiento) VALUES (?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.getId());
+            ps.setInt(1, pe.getId_cliente());
             ps.setString(2, pe.getNombre());
             ps.setString(3, pe.getApellido());
+            ps.setString(4, pe.getCorreo());
+            ps.setString(5, pe.getGenero());
+            ps.setString(6, pe.getFecha_de_nacimiento());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -50,16 +53,19 @@ public class ConsultasPersona extends Conexion {
         }
     }
 
-    public boolean modificar(Persona pe) {
+    public boolean modificar(cliente pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
-        String sql = "UPDATE persona SET nombre=?, apellido=? WHERE id=? ";
+        String sql = "UPDATE cliente SET nombre=?, apellido=? ,correo=?,genero=?,fecha_de_nacimiento=? WHERE id_cliente=? ";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, pe.getNombre());
             ps.setString(2, pe.getApellido());
-            ps.setInt(3, pe.getId());
+            ps.setString(3, pe.getCorreo());
+            ps.setString(4, pe.getGenero());
+            ps.setString(5, pe.getFecha_de_nacimiento());
+            ps.setInt(6, pe.getId_cliente());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -74,13 +80,13 @@ public class ConsultasPersona extends Conexion {
         }
     }
 
-    public boolean eliminar(Persona pe) {
+    public boolean eliminar(cliente pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String sql = "DELETE FROM persona WHERE id=? ";
+        String sql = "DELETE FROM cliente WHERE id_cliente=? ";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.getId());
+            ps.setInt(1, pe.getId_cliente());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -95,19 +101,22 @@ public class ConsultasPersona extends Conexion {
         }
     }
 
-    public boolean buscar(Persona pe) {
+    public boolean buscar(cliente pe) {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = getConexion();
-        String sql = "SELECT * FROM persona WHERE id=? ";
+        String sql = "SELECT * FROM cliente WHERE id_cliente=? ";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.id);
+            ps.setInt(1, pe.id_cliente);
             rs = ps.executeQuery();
             if (rs.next()) {
-                pe.setId(Integer.parseInt(rs.getString("id")));
+                pe.setId_cliente(Integer.parseInt(rs.getString("id_cliente")));
                 pe.setNombre(rs.getString("nombre"));
                 pe.setApellido(rs.getString("apellido"));
+                pe.setCorreo(rs.getString("correo"));
+                pe.setGenero(rs.getString("genero"));
+                pe.setFecha_de_nacimiento(rs.getString("fecha_de_nacimiento"));
                 return true;
             }
             return false;
@@ -123,19 +132,19 @@ public class ConsultasPersona extends Conexion {
         }
     }
 
-    public ArrayList<Persona> obtenerTodos() {
-        ArrayList<Persona> personas = new ArrayList<>();
+    public ArrayList<cliente> obtenerTodos() {
+        ArrayList<cliente> personas = new ArrayList<>();
         try {
             Connection conn = getConexion();
-            String sql = "SELECT * FROM persona";
+            String sql = "SELECT * FROM cliente";
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
                 String nombre = resultSet.getString("NOMBRE");
                 String apellido = resultSet.getString("APELLIDO");
-                Persona persona = new Persona();
-                persona.setId(id);
+                cliente persona = new cliente();
+               // persona.setId_cliente(id_);
                 persona.setNombre(nombre);
                 persona.setApellido(apellido);
                 personas.add(persona);
