@@ -31,7 +31,7 @@ public class CtrlEmpleados implements ActionListener {
             String nombre = frm.txtnombre.getText();
             String apellido = frm.txtapellido.getText();
             String correo=frm.txtcorreo.getText();
-            String genero=frm.txtgenero.getText();
+            String genero=frm.txtgenero.getSelectedItem().toString();
             String fecha_de_nacimiento=frm.txtfecha_nacimiento.getText();
             String cargo=frm.txtcargo.getText();
             int documento=Integer.parseInt(frm.txtdocumento.getText());
@@ -63,7 +63,7 @@ public class CtrlEmpleados implements ActionListener {
             String nombre = frm.txtnombre.getText();
             String apellido = frm.txtapellido.getText();
             String correo = frm.txtcorreo.getText();
-            String genero = frm.txtgenero.getText();
+            String genero = frm.txtgenero.getSelectedItem().toString();
             String fecha_de_nacimiento = frm.txtfecha_nacimiento.getText();
             String cargo=frm.txtcargo.getText();
             int documento=Integer.parseInt(frm.txtdocumento.getText());
@@ -77,7 +77,7 @@ public class CtrlEmpleados implements ActionListener {
                 mod.setNombre(frm.txtnombre.getText());
                 mod.setApellido(frm.txtapellido.getText());
                 mod.setCorreo(frm.txtcorreo.getText());
-                mod.setGenero(frm.txtgenero.getText());
+                mod.setGenero(frm.txtgenero.getSelectedItem().toString());
                 mod.setFecha_de_nacimiento(frm.txtfecha_nacimiento.getText());
                 mod.setCargo(frm.txtcargo.getText());
                 mod.setDocumento(Integer.parseInt(frm.txtdocumento.getText()));
@@ -108,7 +108,7 @@ public class CtrlEmpleados implements ActionListener {
                 frm.txtnombre.setText(mod.getNombre());
                 frm.txtapellido.setText(mod.getApellido());
                 frm.txtcorreo.setText(mod.getCorreo());
-                frm.txtgenero.setText(mod.getGenero());
+                frm.txtgenero.setSelectedItem(mod.getGenero());
                 frm.txtfecha_nacimiento.setText(mod.getFecha_de_nacimiento());
                 frm.txtcargo.setText(mod.getCargo());
                 frm.txtdocumento.setText(String.valueOf(mod.getDocumento()));
@@ -128,7 +128,6 @@ public class CtrlEmpleados implements ActionListener {
         frm.txtnombre.setText(null);
         frm.txtapellido.setText(null);
         frm.txtcorreo.setText(null);
-        frm.txtgenero.setText(null);
         frm.txtfecha_nacimiento.setText(null);
         frm.txtcargo.setText(null);
         frm.txtdocumento.setText(null);

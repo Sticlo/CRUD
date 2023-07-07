@@ -7,7 +7,7 @@ public class Conexion {
 
     private final String base = "proyecto_multi";
     private final String user = "root";
-    private final String password = "123456";
+    private final String password = "7801424";
     private final String url = "jdbc:mysql://localhost:3306/" + base;
     private final String driver = "com.mysql.cj.jdbc.Driver";
     private Connection con = null;

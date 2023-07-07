@@ -7,39 +7,39 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ConsultasCliente extends Conexion {
+public class ConsultasProveedor extends Conexion {
 
-    public boolean registrar(cliente pe) {
+    public boolean registrar(proveedor pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
         // Verificar si la cédula ya existe en la tabla
-        String verificarSql = "SELECT COUNT(*) FROM cliente WHERE id_cliente = ?";
+        String verificarSql = "SELECT COUNT(*) FROM provedor WHERE rut = ?";
         try {
             ps = con.prepareStatement(verificarSql);
-            ps.setInt(1, pe.getId_cliente());
+            ps.setInt(1, pe.getRut());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
                 if (count > 0) {
-                    JOptionPane.showMessageDialog(null, "La cédula ya existe en la base de datos");
+                    JOptionPane.showMessageDialog(null, "el rut del proveedor ya existe en la base de datos");
                     return false;
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la cédula" + e);
+            JOptionPane.showMessageDialog(null, "Error al verificar el rut" + e);
             return false;
         }
         // Insertar el nuevo registro
-        String sql = "INSERT INTO cliente (id_cliente, nombre, apellido,correo,genero,fecha_de_nacimiento,telefono) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO provedor (rut, nombre, documento,direccion,telefono,correo) VALUES (?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.getId_cliente());
+            ps.setInt(1, pe.getRut());
             ps.setString(2, pe.getNombre());
-            ps.setString(3, pe.getApellido());
-            ps.setString(4, pe.getCorreo());
-            ps.setString(5, pe.getGenero());
-            ps.setString(6, pe.getFecha_de_nacimiento());
-            ps.setInt(7,pe.getTelefono());
+            ps.setInt(3, pe.getDocumento());
+            ps.setString(4, pe.getDireccion());
+            ps.setInt(5,pe.getTelefono());
+            ps.setString(6,pe.getCorreo());
+            
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -54,20 +54,19 @@ public class ConsultasCliente extends Conexion {
         }
     }
 
-    public boolean modificar(cliente pe) {
+    public boolean modificar(proveedor pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
-        String sql = "UPDATE cliente SET nombre=?, apellido=? ,correo=?,genero=?,fecha_de_nacimiento=?, telefono=? WHERE id_cliente=? ";
+        String sql = "UPDATE provedor SET nombre=?,documento=?, direccion=?, telefono=?,correo=? WHERE rut=? ";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, pe.getNombre());
-            ps.setString(2, pe.getApellido());
-            ps.setString(3, pe.getCorreo());
-            ps.setString(4, pe.getGenero());
-            ps.setString(5, pe.getFecha_de_nacimiento());
-            ps.setInt(6, pe.getTelefono());
-            ps.setInt(7, pe.getId_cliente());
+            ps.setInt(2, pe.getDocumento());
+            ps.setString(3,pe.getDireccion());
+            ps.setInt(4, pe.getTelefono());
+            ps.setString(5, pe.getCorreo());
+            
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -82,13 +81,13 @@ public class ConsultasCliente extends Conexion {
         }
     }
 
-    public boolean eliminar(cliente pe) {
+    public boolean eliminar(proveedor pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String sql = "DELETE FROM cliente WHERE id_cliente=? ";
+        String sql = "DELETE FROM provedor WHERE rut=? ";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.getId_cliente());
+            ps.setInt(1, pe.getRut());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -103,23 +102,22 @@ public class ConsultasCliente extends Conexion {
         }
     }
 
-    public boolean buscar(cliente pe) {
+    public boolean buscar(proveedor pe) {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = getConexion();
-        String sql = "SELECT * FROM cliente WHERE id_cliente=? ";
+        String sql = "SELECT * FROM provedor WHERE rut=? ";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.id_cliente);
+            ps.setInt(1, pe.rut);
             rs = ps.executeQuery();
             if (rs.next()) {
-                pe.setId_cliente(Integer.parseInt(rs.getString("id_cliente")));
+                pe.setRut(Integer.parseInt(rs.getString("rut")));
                 pe.setNombre(rs.getString("nombre"));
-                pe.setApellido(rs.getString("apellido"));
-                pe.setCorreo(rs.getString("correo"));
-                pe.setGenero(rs.getString("genero"));
-                pe.setFecha_de_nacimiento(rs.getString("fecha_de_nacimiento"));
+                pe.setDocumento(Integer.parseInt(rs.getString("documento")));
+                pe.setDireccion(rs.getString(rs.getString("direccion")));
                 pe.setTelefono(Integer.parseInt(rs.getString("telefono")));
+                pe.setCorreo(rs.getString("correo"));
                 return true;
             }
             return false;
@@ -135,11 +133,11 @@ public class ConsultasCliente extends Conexion {
         }
     }
 
-    public ArrayList<cliente> obtenerTodos() {
-        ArrayList<cliente> personas = new ArrayList<>();
+    public ArrayList<proveedor> obtenerTodos() {
+        ArrayList<proveedor> personas = new ArrayList<>();
         try {
             Connection conn = getConexion();
-            String sql = "SELECT * FROM cliente";
+            String sql = "SELECT * FROM provedor";
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
@@ -150,7 +148,7 @@ public class ConsultasCliente extends Conexion {
                // persona.setId_cliente(id_);
                 persona.setNombre(nombre);
                 persona.setApellido(apellido);
-                personas.add(persona);
+                //personas.add(proveedor);
             }
             resultSet.close();
             statement.close();

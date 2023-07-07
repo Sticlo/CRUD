@@ -3,11 +3,13 @@ package Modelo;
 public class cliente {
 
     int id_cliente;
+    int telefono;
     String nombre;
     String apellido;
     String correo;
     String genero;
     String fecha_de_nacimiento;
+    
     
 
     public int getId_cliente() {
@@ -18,6 +20,14 @@ public class cliente {
         this.id_cliente = id_cliente;
     }
 
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -56,8 +66,5 @@ public class cliente {
 
     public void setFecha_de_nacimiento(String fecha_de_nacimiento) {
         this.fecha_de_nacimiento = fecha_de_nacimiento;
-    }
-    
-    
-   
+    }  
 }
