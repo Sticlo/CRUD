@@ -150,6 +150,8 @@ public class Empleados extends javax.swing.JPanel {
 
         txtdocumento.setBackground(new java.awt.Color(255, 255, 255));
 
+        txtgenero.setBackground(new java.awt.Color(255, 255, 255));
+        txtgenero.setForeground(new java.awt.Color(0, 0, 0));
         txtgenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO", "NO IDENTIFICA" }));
 
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
