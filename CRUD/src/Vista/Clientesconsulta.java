@@ -25,7 +25,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
             Conexion conn = new Conexion();
             Connection con = conn.getConexion();
 
-            String sql = "SELECT id,nombre,apellido FROM persona";
+            String sql = "SELECT id_cliente,nombre,apellido,correo,genero,fecha_de_nacimiento FROM cliente";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
@@ -35,6 +35,9 @@ public class Clientesconsulta extends javax.swing.JPanel {
             modelo.addColumn("ID");
             modelo.addColumn("NOMBRE");
             modelo.addColumn("APELLIDO");
+            modelo.addColumn("CORREO");
+            modelo.addColumn("GENERO");
+            modelo.addColumn("FECHA DE NACIMIENTO");
 
             while (rs.next()) {
                 Object[] filas = new Object[cantidadColumnas];
@@ -71,20 +74,20 @@ public class Clientesconsulta extends javax.swing.JPanel {
         jtpersona.setBackground(new java.awt.Color(255, 255, 255));
         jtpersona.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "APELLIDO"
+                "ID", "NOMBRE", "APELLIDO", "CORREO", "GENERO", "FECHA_N"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

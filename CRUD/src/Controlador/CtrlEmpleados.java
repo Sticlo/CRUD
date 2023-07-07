@@ -1,19 +1,19 @@
 package Controlador;
 
-import Modelo.cliente;
-import Modelo.ConsultasCliente;
-import Vista.Clientes;
+import Modelo.empleados;
+import Modelo.ConsultasEmpleados;
+import Vista.Empleados;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-public class CtrlPersona implements ActionListener {
+public class CtrlEmpleados implements ActionListener {
 
-    private cliente mod;
-    private ConsultasCliente modC;
-    private Clientes frm;
+    private empleados mod;
+    private ConsultasEmpleados modC;
+    private Empleados frm;
 
-    public CtrlPersona(cliente mod, ConsultasCliente modC, Clientes frm) {
+    public CtrlEmpleados(empleados mod, ConsultasEmpleados modC, Empleados frm) {
         this.mod = mod;
         this.modC = modC;
         this.frm = frm;

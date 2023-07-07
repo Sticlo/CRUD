@@ -1,6 +1,6 @@
 package Modelo;
 
-public class cliente {
+public class empleados {
 
     int id_cliente;
     String nombre;
