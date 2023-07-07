@@ -9,36 +9,40 @@ import javax.swing.table.DefaultTableModel;
 
 public class ConsultasEmpleados extends Conexion {
 
-    public boolean registrar(cliente pe) {
+    public boolean registrar(empleados pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
         // Verificar si la cédula ya existe en la tabla
-        String verificarSql = "SELECT COUNT(*) FROM cliente WHERE id_cliente = ?";
+        String verificarSql = "SELECT COUNT(*) FROM empleado WHERE id_empleado = ?";
         try {
             ps = con.prepareStatement(verificarSql);
-            ps.setInt(1, pe.getId_cliente());
+            ps.setInt(1, pe.getId_empleado());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
                 if (count > 0) {
-                    JOptionPane.showMessageDialog(null, "La cédula ya existe en la base de datos");
+                    JOptionPane.showMessageDialog(null, "el id del empleado ya existe en la base de datos");
                     return false;
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la cédula" + e);
+            JOptionPane.showMessageDialog(null, "Error al verificar el id" + e);
             return false;
         }
         // Insertar el nuevo registro
-        String sql = "INSERT INTO cliente (id_cliente, nombre, apellido,correo,genero,fecha_de_nacimiento) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO empleado (id_empleado, nombre, apellido,correo,genero,fecha_de_nacimiento,cargo,documento,telefono) VALUES (?,?,?,?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.getId_cliente());
+            ps.setInt(1, pe.getId_empleado());
             ps.setString(2, pe.getNombre());
             ps.setString(3, pe.getApellido());
             ps.setString(4, pe.getCorreo());
             ps.setString(5, pe.getGenero());
             ps.setString(6, pe.getFecha_de_nacimiento());
+            ps.setString(7, pe.getCargo());
+            ps.setInt(8, pe.getDocumento());
+            ps.setInt(9,pe.getTelefono());
+            
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -53,11 +57,11 @@ public class ConsultasEmpleados extends Conexion {
         }
     }
 
-    public boolean modificar(cliente pe) {
+    public boolean modificar(empleados pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
-        String sql = "UPDATE cliente SET nombre=?, apellido=? ,correo=?,genero=?,fecha_de_nacimiento=? WHERE id_cliente=? ";
+        String sql = "UPDATE empleado SET nombre=?, apellido=? ,correo=?,genero=?,fecha_de_nacimiento=?,cargo=?,documento=?,telefono=? WHERE id_empleado=? ";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, pe.getNombre());
@@ -65,7 +69,10 @@ public class ConsultasEmpleados extends Conexion {
             ps.setString(3, pe.getCorreo());
             ps.setString(4, pe.getGenero());
             ps.setString(5, pe.getFecha_de_nacimiento());
-            ps.setInt(6, pe.getId_cliente());
+            ps.setString(6, pe.getCargo());
+            ps.setInt(7, pe.getDocumento());
+            ps.setInt(8, pe.getTelefono());
+            ps.setInt(9, pe.getId_empleado());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -80,13 +87,13 @@ public class ConsultasEmpleados extends Conexion {
         }
     }
 
-    public boolean eliminar(cliente pe) {
+    public boolean eliminar(empleados pe) {
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String sql = "DELETE FROM cliente WHERE id_cliente=? ";
+        String sql = "DELETE FROM empleado WHERE id_empleado=? ";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.getId_cliente());
+            ps.setInt(1, pe.getId_empleado());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -101,22 +108,25 @@ public class ConsultasEmpleados extends Conexion {
         }
     }
 
-    public boolean buscar(cliente pe) {
+    public boolean buscar(empleados pe) {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = getConexion();
-        String sql = "SELECT * FROM cliente WHERE id_cliente=? ";
+        String sql = "SELECT * FROM empleado WHERE id_empleado=? ";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pe.id_cliente);
+            ps.setInt(1, pe.id_empleado);
             rs = ps.executeQuery();
             if (rs.next()) {
-                pe.setId_cliente(Integer.parseInt(rs.getString("id_cliente")));
+                pe.setId_empleado(Integer.parseInt(rs.getString("id_empleado")));
                 pe.setNombre(rs.getString("nombre"));
                 pe.setApellido(rs.getString("apellido"));
                 pe.setCorreo(rs.getString("correo"));
                 pe.setGenero(rs.getString("genero"));
                 pe.setFecha_de_nacimiento(rs.getString("fecha_de_nacimiento"));
+                pe.setCargo(rs.getString("cargo"));
+                pe.setDocumento(Integer.parseInt(rs.getString("documento")));
+                pe.setTelefono(Integer.parseInt(rs.getString("telefono")));
                 return true;
             }
             return false;

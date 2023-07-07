@@ -2,20 +2,22 @@ package Modelo;
 
 public class empleados {
 
-    int id_cliente;
+    int id_empleado;
     String nombre;
     String apellido;
     String correo;
     String genero;
     String fecha_de_nacimiento;
-    
+    String cargo;
+    int documento;
+    int telefono;
 
-    public int getId_cliente() {
-        return id_cliente;
+    public int getId_empleado() {
+        return id_empleado;
     }
 
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId_empleado(int id_empleado) {
+        this.id_empleado = id_empleado;
     }
 
     public String getNombre() {
@@ -57,6 +59,31 @@ public class empleados {
     public void setFecha_de_nacimiento(String fecha_de_nacimiento) {
         this.fecha_de_nacimiento = fecha_de_nacimiento;
     }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public int getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(int documento) {
+        this.documento = documento;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+    
     
     
    

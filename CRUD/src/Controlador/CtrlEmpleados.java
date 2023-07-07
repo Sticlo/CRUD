@@ -33,16 +33,22 @@ public class CtrlEmpleados implements ActionListener {
             String correo=frm.txtcorreo.getText();
             String genero=frm.txtgenero.getText();
             String fecha_de_nacimiento=frm.txtfecha_nacimiento.getText();
+            String cargo=frm.txtcargo.getText();
+            int documento=Integer.parseInt(frm.txtdocumento.getText());
+            int telefono=Integer.parseInt(frm.txttelefono.getText());
 
-            if (nombre.isEmpty() || apellido.isEmpty()) {
+            if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || genero.isEmpty() || fecha_de_nacimiento.isEmpty() || cargo.isEmpty() || String.valueOf(documento).isEmpty() || String.valueOf(telefono).isEmpty())  {
                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
             } else {
-                mod.setId_cliente(Integer.parseInt(frm.txtid.getText()));
+                mod.setId_empleado(Integer.parseInt(frm.txtid.getText()));
                 mod.setNombre(nombre);
                 mod.setApellido(apellido);
                 mod.setCorreo(correo);
                 mod.setGenero(genero);
                 mod.setFecha_de_nacimiento(fecha_de_nacimiento);
+                mod.setCargo(cargo);
+                mod.setDocumento(Integer.parseInt(frm.txtdocumento.getText()));
+                mod.setTelefono(Integer.parseInt(frm.txttelefono.getText()));
                 
                 if (modC.registrar(mod)) {
                     JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
@@ -59,16 +65,23 @@ public class CtrlEmpleados implements ActionListener {
             String correo = frm.txtcorreo.getText();
             String genero = frm.txtgenero.getText();
             String fecha_de_nacimiento = frm.txtfecha_nacimiento.getText();
+            String cargo=frm.txtcargo.getText();
+            int documento=Integer.parseInt(frm.txtdocumento.getText());
+            int telefono=Integer.parseInt(frm.txttelefono.getText());
+            
             
             if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty()|| genero.isEmpty()|| fecha_de_nacimiento.isEmpty() ){
                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
             } else {
-                mod.setId_cliente(Integer.parseInt(frm.txtid.getText()));
+                mod.setId_empleado(Integer.parseInt(frm.txtid.getText()));
                 mod.setNombre(frm.txtnombre.getText());
                 mod.setApellido(frm.txtapellido.getText());
                 mod.setCorreo(frm.txtcorreo.getText());
                 mod.setGenero(frm.txtgenero.getText());
                 mod.setFecha_de_nacimiento(frm.txtfecha_nacimiento.getText());
+                mod.setCargo(frm.txtcargo.getText());
+                mod.setDocumento(Integer.parseInt(frm.txtdocumento.getText()));
+                mod.setTelefono(Integer.parseInt(frm.txttelefono.getText()));
                 if (modC.modificar(mod)) {
                     JOptionPane.showMessageDialog(null, "REGISTRO MODIFICADO");
                     limpiar();
@@ -79,7 +92,7 @@ public class CtrlEmpleados implements ActionListener {
             }
         }
         if (e.getSource() == frm.btnEliminar) {
-            mod.setId_cliente(Integer.parseInt(frm.txtid.getText()));
+            mod.setId_empleado(Integer.parseInt(frm.txtid.getText()));
             if (modC.eliminar(mod)) {
                 JOptionPane.showMessageDialog(null, "REGISTRO ELIMINADO");
                 limpiar();
@@ -89,14 +102,17 @@ public class CtrlEmpleados implements ActionListener {
             }
         }
         if (e.getSource() == frm.btnBuscar) {
-            mod.setId_cliente(Integer.parseInt(frm.txtid.getText()));
+            mod.setId_empleado(Integer.parseInt(frm.txtid.getText()));
             if (modC.buscar(mod)) {
-                frm.txtid.setText(String.valueOf(mod.getId_cliente()));
+                frm.txtid.setText(String.valueOf(mod.getId_empleado()));
                 frm.txtnombre.setText(mod.getNombre());
                 frm.txtapellido.setText(mod.getApellido());
                 frm.txtcorreo.setText(mod.getCorreo());
                 frm.txtgenero.setText(mod.getGenero());
                 frm.txtfecha_nacimiento.setText(mod.getFecha_de_nacimiento());
+                frm.txtcargo.setText(mod.getCargo());
+                frm.txtdocumento.setText(String.valueOf(mod.getDocumento()));
+                frm.txttelefono.setText(String.valueOf(mod.getTelefono()));
             } else {
                 JOptionPane.showMessageDialog(null, "BÚSQUEDA FALLIDA");
                 limpiar();
@@ -114,5 +130,8 @@ public class CtrlEmpleados implements ActionListener {
         frm.txtcorreo.setText(null);
         frm.txtgenero.setText(null);
         frm.txtfecha_nacimiento.setText(null);
+        frm.txtcargo.setText(null);
+        frm.txtdocumento.setText(null);
+        frm.txttelefono.setText(null);
     }
 }
