@@ -112,30 +112,29 @@ public class CtrlVentas implements ActionListener {
         }
     }
 
-public double obtenerPrecioProducto(int idProducto) {
-    ConsultasProducto consultasProducto = new ConsultasProducto();
-    producto producto = consultasProducto.obtenerProducto(idProducto);
-    if (producto != null) {
-        return producto.getPrecio();
-    } else {
-        // Si el producto no existe, se puede lanzar una excepción o retornar un valor predeterminado.
-        // no olvidarrrr
-        return 0.0;
+    public double obtenerPrecioProducto(int idProducto) {
+        ConsultasProducto consultasProducto = new ConsultasProducto();
+        producto producto = consultasProducto.obtenerProducto(idProducto);
+        if (producto != null) {
+            return producto.getPrecio();
+        } else {
+            // Si el producto no existe, se puede lanzar una excepción o retornar un valor predeterminado.
+            // no olvidarrrr
+            return 0.0;
+        }
     }
-}
 
-public double obtenerIvaProducto(int idProducto) {
-    ConsultasProducto consultasProducto = new ConsultasProducto();
-    producto producto = consultasProducto.obtenerProducto(idProducto);
-    if (producto != null) {
-        return producto.getIva();
-    } else {
-        // Si el producto no existe, puedes manejarlo de acuerdo a tus requerimientos.
-        // Por ejemplo, podrías lanzar una excepción o retornar un valor predeterminado.
-        return 0.0;
+    public double obtenerIvaProducto(int idProducto) {
+        ConsultasProducto consultasProducto = new ConsultasProducto();
+        producto producto = consultasProducto.obtenerProducto(idProducto);
+        if (producto != null) {
+            return producto.getIva();
+        } else {
+            // Si el producto no existe, puedes manejarlo de acuerdo a tus requerimientos.
+            // Por ejemplo, podrías lanzar una excepción o retornar un valor predeterminado.
+            return 0.0;
+        }
     }
-}
-
 
     public double calcularTotalVenta(double precio, double iva, int cantidad) {
         double total = precio * (1 + (iva / 100)) * cantidad;
@@ -151,4 +150,3 @@ public double obtenerIvaProducto(int idProducto) {
         frm.txtTotal.setText("");
     }
 }
-

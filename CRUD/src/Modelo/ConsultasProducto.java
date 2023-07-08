@@ -13,7 +13,7 @@ public class ConsultasProducto extends Conexion {
 
     public boolean agregarProducto(producto producto) {
         Connection con = getConexion();
-        String sql = "INSERT INTO producto (id_producto, nombre, descripcion, iva, precio, serializado, categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO producto (id_producto, nombre, descripcion, iva, precio, serializado, categoria, subcategoria) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, producto.getIdProducto());
             ps.setString(2, producto.getNombre());
@@ -22,6 +22,7 @@ public class ConsultasProducto extends Conexion {
             ps.setInt(5, producto.getPrecio());
             ps.setString(6, producto.getSerializado());
             ps.setString(7, producto.getCategoria());
+            ps.setString(8, producto.getSubcategoria());
             
             int filasAfectadas = ps.executeUpdate();
             return filasAfectadas > 0;
@@ -35,7 +36,7 @@ public class ConsultasProducto extends Conexion {
 
     public boolean modificarProducto(producto producto) {
         Connection con = getConexion();
-        String sql = "UPDATE producto SET nombre = ?, descripcion = ?, iva = ?, precio = ?, serializado = ?, categoria = ? WHERE id_producto = ?";
+        String sql = "UPDATE producto SET nombre = ?, descripcion = ?, iva = ?, precio = ?, serializado = ?, categoria = ? ,subcategoria=? WHERE id_producto = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, producto.getNombre());
             ps.setString(2, producto.getDescripcion());
@@ -43,7 +44,8 @@ public class ConsultasProducto extends Conexion {
             ps.setInt(4, producto.getPrecio());
             ps.setString(5, producto.getSerializado());
             ps.setString(6, producto.getCategoria());
-            ps.setInt(7, producto.getIdProducto());
+            ps.setString(7, producto.getSubcategoria());
+            ps.setInt(8, producto.getIdProducto());
             
             int filasAfectadas = ps.executeUpdate();
             return filasAfectadas > 0;
@@ -87,7 +89,7 @@ public class ConsultasProducto extends Conexion {
                     producto.setPrecio(rs.getInt("precio"));
                     producto.setSerializado(rs.getString("serializado"));
                     producto.setCategoria(rs.getString("categoria"));
-                    
+                    producto.setSubcategoria(rs.getString("subcategoria"));
                     return producto;
                 }
             }

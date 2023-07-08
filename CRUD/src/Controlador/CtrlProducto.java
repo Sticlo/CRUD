@@ -1,13 +1,13 @@
 
 package Controlador;
 
-
 import Modelo.producto;
 import Modelo.ConsultasProducto;
 import Vista.Producto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+
 
 public class CtrlProducto implements ActionListener {
 
@@ -25,6 +25,18 @@ public class CtrlProducto implements ActionListener {
         this.frm.btnEliminar.addActionListener(this);
         this.frm.btnBuscar.addActionListener(this);
         this.frm.btnLimpiar.addActionListener(this);
+
+        // Agregar los items al ComboBox de categoría
+        frm.cmbCategoria.addItem("Categoría 1");
+        frm.cmbCategoria.addItem("Categoría 2");
+        frm.cmbCategoria.addItem("Categoría 3");
+
+        // Manejar el evento de selección de categoría
+        frm.cmbCategoria.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                actualizarSubcategorias();
+            }
+        });
     }
 
     @Override
@@ -36,7 +48,8 @@ public class CtrlProducto implements ActionListener {
             int iva = Integer.parseInt(frm.txtIVA.getText());
             int precio = Integer.parseInt(frm.txtPrecio.getText());
             String serializado = frm.txtSerializado.getText();
-            String categoria = frm.txtCategoria.getText();
+            String categoria = (String) frm.cmbCategoria.getSelectedItem();
+            String subcategoria = (String) frm.cmbSubcategoria.getSelectedItem();
 
             if (nombre.isEmpty() || descripcion.isEmpty() || serializado.isEmpty() || categoria.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
@@ -48,6 +61,7 @@ public class CtrlProducto implements ActionListener {
                 mod.setPrecio(precio);
                 mod.setSerializado(serializado);
                 mod.setCategoria(categoria);
+                mod.setSubcategoria(subcategoria);
 
                 if (modC.agregarProducto(mod)) {
                     JOptionPane.showMessageDialog(null, "Registro guardado exitosamente");
@@ -63,7 +77,8 @@ public class CtrlProducto implements ActionListener {
             int iva = Integer.parseInt(frm.txtIVA.getText());
             int precio = Integer.parseInt(frm.txtPrecio.getText());
             String serializado = frm.txtSerializado.getText();
-            String categoria = frm.txtCategoria.getText();
+            String categoria = (String) frm.cmbCategoria.getSelectedItem();
+            String subcategoria = (String) frm.cmbSubcategoria.getSelectedItem();
 
             if (nombre.isEmpty() || descripcion.isEmpty() || serializado.isEmpty() || categoria.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
@@ -75,6 +90,7 @@ public class CtrlProducto implements ActionListener {
                 mod.setPrecio(precio);
                 mod.setSerializado(serializado);
                 mod.setCategoria(categoria);
+                mod.setSubcategoria(subcategoria);
 
                 if (modC.modificarProducto(mod)) {
                     JOptionPane.showMessageDialog(null, "Registro modificado exitosamente");
@@ -104,13 +120,34 @@ public class CtrlProducto implements ActionListener {
                 frm.txtIVA.setText(String.valueOf(productoEncontrado.getIva()));
                 frm.txtPrecio.setText(String.valueOf(productoEncontrado.getPrecio()));
                 frm.txtSerializado.setText(productoEncontrado.getSerializado());
-                frm.txtCategoria.setText(productoEncontrado.getCategoria());
+                frm.cmbCategoria.setSelectedItem(productoEncontrado.getCategoria());
+                frm.cmbSubcategoria.setSelectedItem(productoEncontrado.getSubcategoria());
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el ID especificado");
             }
         }
         if (e.getSource() == frm.btnLimpiar) {
             limpiarCampos();
+        }
+    }
+
+    private void actualizarSubcategorias() {
+        String categoriaSeleccionada = (String) frm.cmbCategoria.getSelectedItem();
+        frm.cmbSubcategoria.removeAllItems();
+
+        // Obtener las subcategorías correspondientes a la categoría seleccionada y agregarlas al ComboBox de subcategoría
+        if (categoriaSeleccionada.equals("Categoría 1")) {
+            frm.cmbSubcategoria.addItem("Subcategoría 1.1");
+            frm.cmbSubcategoria.addItem("Subcategoría 1.2");
+            frm.cmbSubcategoria.addItem("Subcategoría 1.3");
+        } else if (categoriaSeleccionada.equals("Categoría 2")) {
+            frm.cmbSubcategoria.addItem("Subcategoría 2.1");
+            frm.cmbSubcategoria.addItem("Subcategoría 2.2");
+            frm.cmbSubcategoria.addItem("Subcategoría 2.3");
+        } else if (categoriaSeleccionada.equals("Categoría 3")) {
+            frm.cmbSubcategoria.addItem("Subcategoría 3.1");
+            frm.cmbSubcategoria.addItem("Subcategoría 3.2");
+            frm.cmbSubcategoria.addItem("Subcategoría 3.3");
         }
     }
 
@@ -121,6 +158,7 @@ public class CtrlProducto implements ActionListener {
         frm.txtIVA.setText("");
         frm.txtPrecio.setText("");
         frm.txtSerializado.setText("");
-        frm.txtCategoria.setText("");
+        frm.cmbCategoria.setSelectedIndex(0);
+        frm.cmbSubcategoria.removeAllItems();
     }
 }

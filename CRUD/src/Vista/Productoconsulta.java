@@ -23,7 +23,7 @@ public class Productoconsulta extends javax.swing.JPanel {
             Conexion conn = new Conexion();
             Connection con = conn.getConexion();
 
-            String sql = "SELECT id_producto,nombre,descripcion,iva,precio,serializado, categoria FROM producto";
+            String sql = "SELECT id_producto,nombre,descripcion,iva,precio,serializado, categoria,subcategoria FROM producto";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
@@ -37,6 +37,7 @@ public class Productoconsulta extends javax.swing.JPanel {
             modelo.addColumn("PRECIO");
             modelo.addColumn("SERIALIZADO");
             modelo.addColumn("CATEGORIA");
+            modelo.addColumn("SUBCATEGORIA");
 
             while (rs.next()) {
                 Object[] filas = new Object[cantidadColumnas];
@@ -73,20 +74,20 @@ public class Productoconsulta extends javax.swing.JPanel {
         jtpersona.setBackground(new java.awt.Color(255, 255, 255));
         jtpersona.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "DESCRIPCION", "IVA", "PRECIO", "SERIALIZADO", "CATEGORIA"
+                "ID", "NOMBRE", "DESCRIPCION", "IVA", "PRECIO", "SERIALIZADO", "CATEGORIA", "SUBCATEGORIA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

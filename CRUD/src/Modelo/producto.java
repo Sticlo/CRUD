@@ -9,7 +9,16 @@ public class producto {
     private int precio;
     private String serializado;
     private String categoria;
+    private String subcategoria;
 
+    public String getSubcategoria() {
+        return subcategoria;
+    }
+
+    public void setSubcategoria(String subcategoria) {
+        this.subcategoria = subcategoria;
+    }
+    
     public int getIdProducto() {
         return idProducto;
     }
