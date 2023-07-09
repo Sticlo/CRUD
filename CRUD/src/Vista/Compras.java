@@ -116,7 +116,7 @@ public class Compras extends javax.swing.JPanel {
 
         jButton1.setBackground(new java.awt.Color(0, 0, 153));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("TOTAL PRODUCTOS");
+        jButton1.setText("TOTAL COMPRAS");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,7 +295,7 @@ public class Compras extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ShowJPanel(new Productoconsulta());
+        ShowJPanel(new Comprasconsulta());
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

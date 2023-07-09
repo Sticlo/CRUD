@@ -2,19 +2,18 @@ package Vista;
 
 import javax.swing.JOptionPane;
 import Controlador.CtrlPersona;
+import Controlador.CtrlVentas;
 import Modelo.Conexion;
-import Modelo.ConsultasCliente;
-import Modelo.cliente;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
-public class Empleadosconsulta extends javax.swing.JPanel {
+public class Ventasconsulta extends javax.swing.JPanel {
 
-    private CtrlPersona controlador;
+    private CtrlVentas controlador;
 
-    public Empleadosconsulta() {
+    public Ventasconsulta() {
         initComponents();
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -25,22 +24,19 @@ public class Empleadosconsulta extends javax.swing.JPanel {
             Conexion conn = new Conexion();
             Connection con = conn.getConexion();
 
-            String sql = "SELECT id_empleado,nombre,apellido,correo,genero,fecha_de_nacimiento,cargo,documento,telefono FROM empleado";
+            String sql = "SELECT id_venta,id_cliente,id_producto,id_empleado,cantidad,total FROM venta";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
             ResultSetMetaData rsMd = rs.getMetaData();
             int cantidadColumnas = rsMd.getColumnCount();
 
-            modelo.addColumn("ID");
-            modelo.addColumn("NOMBRE");
-            modelo.addColumn("APELLIDO");
-            modelo.addColumn("CORREO");
-            modelo.addColumn("GENERO");
-            modelo.addColumn("FECHA DE NACIMIENTO");
-            modelo.addColumn("CARGO");
-            modelo.addColumn("DOCUMENTO");
-            modelo.addColumn("TELEFONO");
+            modelo.addColumn("ID_VENTA");
+            modelo.addColumn("ID_CLIENTE");
+            modelo.addColumn("ID_PRODUCTO");
+            modelo.addColumn("ID_EMPLEADO");
+            modelo.addColumn("CANTIDAD");
+            modelo.addColumn("TOTAL");
 
             while (rs.next()) {
                 Object[] filas = new Object[cantidadColumnas];
@@ -72,25 +68,25 @@ public class Empleadosconsulta extends javax.swing.JPanel {
 
         BIENVENIDOS.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         BIENVENIDOS.setForeground(new java.awt.Color(0, 0, 0));
-        BIENVENIDOS.setText("CLIENTES REGISTRADOS");
+        BIENVENIDOS.setText("VENTAS REGISTRADAS");
 
         jtpersona.setBackground(new java.awt.Color(255, 255, 255));
         jtpersona.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "APELLIDO", "CORREO", "GENERO", "FECHA_N", "CARGO", "DOCUMENTO", "TELEFONO"
+                "ID_VENTA", "ID_CLIENTE", "ID_PRODUCTO", "ID_EMPLEADO", "CANTIDAD", "TOTAL"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

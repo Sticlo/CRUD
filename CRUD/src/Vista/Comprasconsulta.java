@@ -1,5 +1,6 @@
 package Vista;
 
+import Controlador.CtrlCompra;
 import javax.swing.JOptionPane;
 import Controlador.CtrlPersona;
 import Modelo.Conexion;
@@ -10,11 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
-public class Clientesconsulta extends javax.swing.JPanel {
+public class Comprasconsulta extends javax.swing.JPanel {
 
-    private CtrlPersona controlador;
+    private CtrlCompra controlador;
 
-    public Clientesconsulta() {
+    public Comprasconsulta() {
         initComponents();
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -25,21 +26,21 @@ public class Clientesconsulta extends javax.swing.JPanel {
             Conexion conn = new Conexion();
             Connection con = conn.getConexion();
 
-            String sql = "SELECT id_cliente,nombre,apellido,correo,genero,fecha_de_nacimiento, telefono FROM cliente";
+            String sql = "SELECT id_compra,id_producto,rut,cantidad,iva,descuento, sub_total,total FROM compra";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
             ResultSetMetaData rsMd = rs.getMetaData();
             int cantidadColumnas = rsMd.getColumnCount();
 
-            modelo.addColumn("ID");
-            modelo.addColumn("NOMBRE");
-            modelo.addColumn("APELLIDO");
-            modelo.addColumn("CORREO");
-            modelo.addColumn("GENERO");
-            modelo.addColumn("FECHA DE NACIMIENTO");
-            modelo.addColumn("TELEFONO");
-
+            modelo.addColumn("id_compra");
+            modelo.addColumn("id_producto");
+            modelo.addColumn("rut");
+            modelo.addColumn("cantidad");
+            modelo.addColumn("iva");
+            modelo.addColumn("descuento");
+            modelo.addColumn("sub_total");
+            modelo.addColumn("total");
             while (rs.next()) {
                 Object[] filas = new Object[cantidadColumnas];
                 for (int i = 0; i < cantidadColumnas; i++) {
@@ -70,25 +71,25 @@ public class Clientesconsulta extends javax.swing.JPanel {
 
         BIENVENIDOS.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         BIENVENIDOS.setForeground(new java.awt.Color(0, 0, 0));
-        BIENVENIDOS.setText("CLIENTES REGISTRADOS");
+        BIENVENIDOS.setText("COMPRAS A PROVEDORES REGISTRADAS");
 
         jtpersona.setBackground(new java.awt.Color(255, 255, 255));
         jtpersona.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "APELLIDO", "CORREO", "GENERO", "FECHA_N", "TELEFONO"
+                "id_compra", "id_producto", "rut", "cantidad", "iva", "descuento", "sub_total", "total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -120,8 +121,8 @@ public class Clientesconsulta extends javax.swing.JPanel {
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(277, 277, 277)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -152,7 +153,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ShowJPanel(new Clientes());
+        ShowJPanel(new Compras());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ShowJPanel(JPanel p) {

@@ -72,7 +72,7 @@ public class Empleadosconsulta extends javax.swing.JPanel {
 
         BIENVENIDOS.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         BIENVENIDOS.setForeground(new java.awt.Color(0, 0, 0));
-        BIENVENIDOS.setText("CLIENTES REGISTRADOS");
+        BIENVENIDOS.setText("EMPLEADOS REGISTRADOS");
 
         jtpersona.setBackground(new java.awt.Color(255, 255, 255));
         jtpersona.setModel(new javax.swing.table.DefaultTableModel(
