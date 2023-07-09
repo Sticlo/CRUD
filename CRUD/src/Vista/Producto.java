@@ -140,7 +140,6 @@ public class Producto extends javax.swing.JPanel {
 
         cmbCategoria.setBackground(new java.awt.Color(255, 255, 255));
         cmbCategoria.setForeground(new java.awt.Color(0, 0, 0));
-        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cmbSubcategoria.setBackground(new java.awt.Color(255, 255, 255));
         cmbSubcategoria.setForeground(new java.awt.Color(0, 0, 0));
