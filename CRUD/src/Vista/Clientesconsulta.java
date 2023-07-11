@@ -63,7 +63,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtpersona = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(795, 640));
 
@@ -113,13 +113,13 @@ public class Clientesconsulta extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 153));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("PDF");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setBackground(new java.awt.Color(0, 0, 153));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("PDF");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -134,8 +134,8 @@ public class Clientesconsulta extends javax.swing.JPanel {
                         .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(contentLayout.createSequentialGroup()
                                 .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(67, 67, 67)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(277, 277, 277)
@@ -148,7 +148,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -172,24 +172,51 @@ public class Clientesconsulta extends javax.swing.JPanel {
         ShowJPanel(new Clientes());
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             com.itextpdf.text.Document document = new com.itextpdf.text.Document();
             String filePath = System.getProperty("user.home") + "/Downloads/tabla_clientes.pdf";
             com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
+            // Crear encabezado personalizado
+            com.itextpdf.text.pdf.PdfPTable headerTable = new com.itextpdf.text.pdf.PdfPTable(1);
+            headerTable.setWidthPercentage(100);
+            headerTable.getDefaultCell().setBackgroundColor(com.itextpdf.text.BaseColor.GRAY);
+            headerTable.getDefaultCell().setPadding(10);
+            headerTable.getDefaultCell().setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_LEFT);
+            headerTable.addCell(new com.itextpdf.text.Phrase("TODOCOMPUTADORES", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 18, com.itextpdf.text.Font.BOLD, com.itextpdf.text.BaseColor.WHITE)));
+            headerTable.addCell(""); // Espacio vacío para ajustar la posición vertical
             document.open();
-            com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+            document.add(headerTable);
 
-            // Agregar encabezados de columna al PDF
+            com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+            pdfTable.setWidthPercentage(100);
+
+            // Asignar colores diferentes a cada columna
+            com.itextpdf.text.pdf.PdfPCell[] cells = new com.itextpdf.text.pdf.PdfPCell[jtpersona.getColumnCount()];
+            com.itextpdf.text.BaseColor[] columnColors = {
+                com.itextpdf.text.BaseColor.WHITE,
+                com.itextpdf.text.BaseColor.YELLOW,
+                com.itextpdf.text.BaseColor.CYAN,
+                com.itextpdf.text.BaseColor.GREEN
+            };
+
             for (int i = 0; i < jtpersona.getColumnCount(); i++) {
-                pdfTable.addCell(jtpersona.getColumnName(i));
+                // Asegurarse de que no se exceda la longitud del array columnColors
+                int colorIndex = i % columnColors.length;
+                cells[i] = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(jtpersona.getColumnName(i), new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD)));
+                cells[i].setBackgroundColor(columnColors[colorIndex]);
+                pdfTable.addCell(cells[i]);
             }
 
             // Agregar filas de datos al PDF
             for (int rows = 0; rows < jtpersona.getRowCount(); rows++) {
                 for (int cols = 0; cols < jtpersona.getColumnCount(); cols++) {
-                    pdfTable.addCell(jtpersona.getModel().getValueAt(rows, cols).toString());
+                    // Asegurarse de que no se exceda la longitud del array columnColors
+                    int colorIndex = cols % columnColors.length;
+                    cells[cols] = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(jtpersona.getModel().getValueAt(rows, cols).toString(), new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 10)));
+                    cells[cols].setBackgroundColor(columnColors[colorIndex]);
+                    pdfTable.addCell(cells[cols]);
                 }
             }
 
@@ -200,7 +227,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al generar el archivo PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void ShowJPanel(JPanel p) {
         p.setSize(795, 640);
@@ -215,7 +242,7 @@ public class Clientesconsulta extends javax.swing.JPanel {
     private javax.swing.JLabel BIENVENIDOS;
     public javax.swing.JPanel content;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jtpersona;
     // End of variables declaration//GEN-END:variables

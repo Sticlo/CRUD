@@ -36,6 +36,8 @@ public class CtrlEmpleados implements ActionListener {
             String cargo=frm.txtcargo.getText();
             int documento=Integer.parseInt(frm.txtdocumento.getText());
             int telefono=Integer.parseInt(frm.txttelefono.getText());
+            int salario = Integer.parseInt(frm.txtsalario.getText());
+            int cantidad_ventas =  0;
 
             if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || genero.isEmpty() || fecha_de_nacimiento.isEmpty() || cargo.isEmpty() || String.valueOf(documento).isEmpty() || String.valueOf(telefono).isEmpty())  {
                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
@@ -49,6 +51,8 @@ public class CtrlEmpleados implements ActionListener {
                 mod.setCargo(cargo);
                 mod.setDocumento(Integer.parseInt(frm.txtdocumento.getText()));
                 mod.setTelefono(Integer.parseInt(frm.txttelefono.getText()));
+                mod.setSalario(Integer.parseInt(frm.txtsalario.getText()));
+                mod.setCantidad_ventas(0);
                 
                 if (modC.registrar(mod)) {
                     JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");

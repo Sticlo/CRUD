@@ -26,7 +26,7 @@ public class Empleadosconsulta extends javax.swing.JPanel {
             Conexion conn = new Conexion();
             Connection con = conn.getConexion();
 
-            String sql = "SELECT id_empleado,nombre,apellido,correo,genero,fecha_de_nacimiento,cargo,documento,telefono FROM empleado";
+            String sql = "SELECT id_empleado,nombre,apellido,correo,genero,fecha_de_nacimiento,cargo,documento,telefono, salario, cantidad_ventas FROM empleado";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
@@ -42,6 +42,8 @@ public class Empleadosconsulta extends javax.swing.JPanel {
             modelo.addColumn("CARGO");
             modelo.addColumn("DOCUMENTO");
             modelo.addColumn("TELEFONO");
+            modelo.addColumn("SALARIO");
+            modelo.addColumn("CANTIDAD_VENTAS");
 
             while (rs.next()) {
                 Object[] filas = new Object[cantidadColumnas];
@@ -180,18 +182,45 @@ public class Empleadosconsulta extends javax.swing.JPanel {
             String filePath = System.getProperty("user.home") + "/Downloads/tabla_empleados.pdf";
             com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
+            // Crear encabezado personalizado
+            com.itextpdf.text.pdf.PdfPTable headerTable = new com.itextpdf.text.pdf.PdfPTable(1);
+            headerTable.setWidthPercentage(100);
+            headerTable.getDefaultCell().setBackgroundColor(com.itextpdf.text.BaseColor.GRAY);
+            headerTable.getDefaultCell().setPadding(10);
+            headerTable.getDefaultCell().setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_LEFT);
+            headerTable.addCell(new com.itextpdf.text.Phrase("TODOCOMPUTADORES", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 18, com.itextpdf.text.Font.BOLD, com.itextpdf.text.BaseColor.WHITE)));
+            headerTable.addCell(""); // Espacio vacío para ajustar la posición vertical
             document.open();
-            com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+            document.add(headerTable);
 
-            // Agregar encabezados de columna al PDF
+            com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+            pdfTable.setWidthPercentage(100);
+
+            // Asignar colores diferentes a cada columna
+            com.itextpdf.text.pdf.PdfPCell[] cells = new com.itextpdf.text.pdf.PdfPCell[jtpersona.getColumnCount()];
+            com.itextpdf.text.BaseColor[] columnColors = {
+                com.itextpdf.text.BaseColor.WHITE,
+                com.itextpdf.text.BaseColor.YELLOW,
+                com.itextpdf.text.BaseColor.CYAN,
+                com.itextpdf.text.BaseColor.GREEN
+            };
+
             for (int i = 0; i < jtpersona.getColumnCount(); i++) {
-                pdfTable.addCell(jtpersona.getColumnName(i));
+                // Asegurarse de que no se exceda la longitud del array columnColors
+                int colorIndex = i % columnColors.length;
+                cells[i] = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(jtpersona.getColumnName(i), new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD)));
+                cells[i].setBackgroundColor(columnColors[colorIndex]);
+                pdfTable.addCell(cells[i]);
             }
 
             // Agregar filas de datos al PDF
             for (int rows = 0; rows < jtpersona.getRowCount(); rows++) {
                 for (int cols = 0; cols < jtpersona.getColumnCount(); cols++) {
-                    pdfTable.addCell(jtpersona.getModel().getValueAt(rows, cols).toString());
+                    // Asegurarse de que no se exceda la longitud del array columnColors
+                    int colorIndex = cols % columnColors.length;
+                    cells[cols] = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(jtpersona.getModel().getValueAt(rows, cols).toString(), new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 10)));
+                    cells[cols].setBackgroundColor(columnColors[colorIndex]);
+                    pdfTable.addCell(cells[cols]);
                 }
             }
 

@@ -30,7 +30,7 @@ public class ConsultasEmpleados extends Conexion {
             return false;
         }
         // Insertar el nuevo registro
-        String sql = "INSERT INTO empleado (id_empleado, nombre, apellido,correo,genero,fecha_de_nacimiento,cargo,documento,telefono) VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO empleado (id_empleado, nombre, apellido,correo,genero,fecha_de_nacimiento,cargo,documento,telefono, salario, cantidad_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, pe.getId_empleado());
@@ -42,6 +42,8 @@ public class ConsultasEmpleados extends Conexion {
             ps.setString(7, pe.getCargo());
             ps.setInt(8, pe.getDocumento());
             ps.setInt(9,pe.getTelefono());
+            ps.setInt(10, pe.salario);
+            ps.setInt(11, 0);
             
             ps.execute();
             return true;
@@ -61,7 +63,7 @@ public class ConsultasEmpleados extends Conexion {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
-        String sql = "UPDATE empleado SET nombre=?, apellido=? ,correo=?,genero=?,fecha_de_nacimiento=?,cargo=?,documento=?,telefono=? WHERE id_empleado=? ";
+        String sql = "UPDATE empleado SET nombre=?, apellido=? ,correo=?,genero=?,fecha_de_nacimiento=?,cargo=?,documento=?,telefono=?, salario=?, cantidad_ventas = ? WHERE id_empleado=? ";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, pe.getNombre());
@@ -73,6 +75,8 @@ public class ConsultasEmpleados extends Conexion {
             ps.setInt(7, pe.getDocumento());
             ps.setInt(8, pe.getTelefono());
             ps.setInt(9, pe.getId_empleado());
+            ps.setInt(10, pe.getSalario());
+            ps.setInt(11, pe.getCantidad_ventas());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -127,6 +131,7 @@ public class ConsultasEmpleados extends Conexion {
                 pe.setCargo(rs.getString("cargo"));
                 pe.setDocumento(Integer.parseInt(rs.getString("documento")));
                 pe.setTelefono(Integer.parseInt(rs.getString("telefono")));
+                pe.setSalario(Integer.parseInt(rs.getString("salario")));
                 return true;
             }
             return false;

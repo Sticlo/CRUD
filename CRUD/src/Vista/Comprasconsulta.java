@@ -176,34 +176,60 @@ public class Comprasconsulta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    try {
-        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-        String filePath = System.getProperty("user.home") + "/Downloads/tabla_compras.pdf";
-        com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(filePath));
+        try {
+            com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+            String filePath = System.getProperty("user.home") + "/Downloads/tabla_compras.pdf";
+            com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
-        document.open();
-        com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+            // Crear encabezado personalizado
+            com.itextpdf.text.pdf.PdfPTable headerTable = new com.itextpdf.text.pdf.PdfPTable(1);
+            headerTable.setWidthPercentage(100);
+            headerTable.getDefaultCell().setBackgroundColor(com.itextpdf.text.BaseColor.GRAY);
+            headerTable.getDefaultCell().setPadding(10);
+            headerTable.getDefaultCell().setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_LEFT);
+            headerTable.addCell(new com.itextpdf.text.Phrase("TODOCOMPUTADORES", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 18, com.itextpdf.text.Font.BOLD, com.itextpdf.text.BaseColor.WHITE)));
+            headerTable.addCell(""); // Espacio vacío para ajustar la posición vertical
+            document.open();
+            document.add(headerTable);
 
-        // Agregar encabezados de columna al PDF
-        for (int i = 0; i < jtpersona.getColumnCount(); i++) {
-            pdfTable.addCell(jtpersona.getColumnName(i));
-        }
+            com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+            pdfTable.setWidthPercentage(100);
 
-        // Agregar filas de datos al PDF
-        for (int rows = 0; rows < jtpersona.getRowCount(); rows++) {
-            for (int cols = 0; cols < jtpersona.getColumnCount(); cols++) {
-                pdfTable.addCell(jtpersona.getModel().getValueAt(rows, cols).toString());
+            // Asignar colores diferentes a cada columna
+            com.itextpdf.text.pdf.PdfPCell[] cells = new com.itextpdf.text.pdf.PdfPCell[jtpersona.getColumnCount()];
+            com.itextpdf.text.BaseColor[] columnColors = {
+                com.itextpdf.text.BaseColor.WHITE,
+                com.itextpdf.text.BaseColor.YELLOW,
+                com.itextpdf.text.BaseColor.CYAN,
+                com.itextpdf.text.BaseColor.GREEN
+            };
+
+            for (int i = 0; i < jtpersona.getColumnCount(); i++) {
+                // Asegurarse de que no se exceda la longitud del array columnColors
+                int colorIndex = i % columnColors.length;
+                cells[i] = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(jtpersona.getColumnName(i), new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD)));
+                cells[i].setBackgroundColor(columnColors[colorIndex]);
+                pdfTable.addCell(cells[i]);
             }
+
+            // Agregar filas de datos al PDF
+            for (int rows = 0; rows < jtpersona.getRowCount(); rows++) {
+                for (int cols = 0; cols < jtpersona.getColumnCount(); cols++) {
+                    // Asegurarse de que no se exceda la longitud del array columnColors
+                    int colorIndex = cols % columnColors.length;
+                    cells[cols] = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(jtpersona.getModel().getValueAt(rows, cols).toString(), new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 10)));
+                    cells[cols].setBackgroundColor(columnColors[colorIndex]);
+                    pdfTable.addCell(cells[cols]);
+                }
+            }
+
+            document.add(pdfTable);
+            document.close();
+
+            JOptionPane.showMessageDialog(null, "El archivo PDF se generó exitosamente. Ruta: " + filePath, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al generar el archivo PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        document.add(pdfTable);
-        document.close();
-
-        JOptionPane.showMessageDialog(null, "El archivo PDF se generó exitosamente. Ruta: " + filePath, "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Error al generar el archivo PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -11,6 +11,8 @@ public class empleados {
     String cargo;
     int documento;
     int telefono;
+    int salario;
+    int cantidad_ventas;
 
     public int getId_empleado() {
         return id_empleado;
@@ -83,8 +85,21 @@ public class empleados {
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
+
+    public int getSalario() {
+        return salario;
+    }
+
+    public void setSalario(int salario) {
+        this.salario = salario;
+    }
+
+    public int getCantidad_ventas() {
+        return cantidad_ventas;
+    }
+
+    public void setCantidad_ventas(int cantidad_ventas) {
+        this.cantidad_ventas = cantidad_ventas;
+    }
     
-    
-    
-   
 }

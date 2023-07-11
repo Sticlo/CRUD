@@ -131,14 +131,9 @@ private int obtenerPrecioProducto(int idProducto) {
 }
 
 private int obtenerDescuento(int subTotal) {
-    // Aquí debes implementar la lógica para obtener el descuento basado en el subtotal
-    // Retorna el descuento calculado
     
-    // Implementa la lógica para calcular el descuento basado en el subtotal y cualquier otra consideración que aplique
-    // Puedes utilizar estructuras condicionales, cálculos matemáticos u otras reglas de negocio para determinar el descuento
-    
-    // Ejemplo: Si el subtotal es mayor a 1000, se aplica un descuento del 10%
-    if (subTotal > 1000) {
+    // Ejemplo: Si el subtotal es mayor a 100000, se aplica un descuento del 10%
+    if (subTotal > 100000) {
         int descuento = (subTotal * 10) / 100;
         return descuento;
     } else {
