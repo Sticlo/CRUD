@@ -6,10 +6,14 @@ import Controlador.CtrlPersona;
 import Modelo.Conexion;
 import Modelo.ConsultasCliente;
 import Modelo.cliente;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.BorderLayout;
+import java.io.FileOutputStream;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import javax.swing.text.Document;
 
 public class Comprasconsulta extends javax.swing.JPanel {
 
@@ -63,6 +67,7 @@ public class Comprasconsulta extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtpersona = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(795, 640));
 
@@ -104,11 +109,21 @@ public class Comprasconsulta extends javax.swing.JPanel {
 
         jButton1.setBackground(new java.awt.Color(0, 0, 153));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("VOLVER");
+        jButton1.setText("PDF");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(0, 0, 153));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("VOLVER");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -117,34 +132,42 @@ public class Comprasconsulta extends javax.swing.JPanel {
         contentLayout.setHorizontalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(contentLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(contentLayout.createSequentialGroup()
-                        .addGap(277, 277, 277)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(contentLayout.createSequentialGroup()
+                    .addGap(287, 287, 287)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(298, Short.MAX_VALUE)))
         );
         contentLayout.setVerticalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
+            .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contentLayout.createSequentialGroup()
+                    .addContainerGap(530, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(69, 69, 69)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,8 +176,39 @@ public class Comprasconsulta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ShowJPanel(new Compras());
+    try {
+        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+        String filePath = System.getProperty("user.home") + "/Downloads/tabla_compras.pdf";
+        com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+        document.open();
+        com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+
+        // Agregar encabezados de columna al PDF
+        for (int i = 0; i < jtpersona.getColumnCount(); i++) {
+            pdfTable.addCell(jtpersona.getColumnName(i));
+        }
+
+        // Agregar filas de datos al PDF
+        for (int rows = 0; rows < jtpersona.getRowCount(); rows++) {
+            for (int cols = 0; cols < jtpersona.getColumnCount(); cols++) {
+                pdfTable.addCell(jtpersona.getModel().getValueAt(rows, cols).toString());
+            }
+        }
+
+        document.add(pdfTable);
+        document.close();
+
+        JOptionPane.showMessageDialog(null, "El archivo PDF se generó exitosamente. Ruta: " + filePath, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al generar el archivo PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ShowJPanel(new Compras());
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void ShowJPanel(JPanel p) {
         p.setSize(795, 640);
@@ -169,6 +223,7 @@ public class Comprasconsulta extends javax.swing.JPanel {
     private javax.swing.JLabel BIENVENIDOS;
     public javax.swing.JPanel content;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jtpersona;
     // End of variables declaration//GEN-END:variables

@@ -68,7 +68,7 @@ public class Compras extends javax.swing.JPanel {
 
         BIENVENIDOS.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         BIENVENIDOS.setForeground(new java.awt.Color(0, 0, 0));
-        BIENVENIDOS.setText(" ¡Bienvenido(a) a la seccion productos!");
+        BIENVENIDOS.setText(" ¡Bienvenido(a) a la seccion compras!");
 
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("RUT_PROVEEDOR");

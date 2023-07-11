@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import Controlador.CtrlPersona;
 import Modelo.Conexion;
 import java.awt.BorderLayout;
+import java.io.FileOutputStream;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -61,6 +62,7 @@ public class Productoconsulta extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtpersona = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(795, 640));
 
@@ -110,6 +112,16 @@ public class Productoconsulta extends javax.swing.JPanel {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(0, 0, 153));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("PDF");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
         content.setLayout(contentLayout);
         contentLayout.setHorizontalGroup(
@@ -119,7 +131,10 @@ public class Productoconsulta extends javax.swing.JPanel {
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(contentLayout.createSequentialGroup()
+                                .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(277, 277, 277)
@@ -130,12 +145,14 @@ public class Productoconsulta extends javax.swing.JPanel {
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BIENVENIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -154,6 +171,36 @@ public class Productoconsulta extends javax.swing.JPanel {
         ShowJPanel(new Producto());
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+            String filePath = System.getProperty("user.home") + "/Downloads/tabla_productos.pdf";
+            com.itextpdf.text.pdf.PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+            document.open();
+            com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(jtpersona.getColumnCount());
+
+            // Agregar encabezados de columna al PDF
+            for (int i = 0; i < jtpersona.getColumnCount(); i++) {
+                pdfTable.addCell(jtpersona.getColumnName(i));
+            }
+
+            // Agregar filas de datos al PDF
+            for (int rows = 0; rows < jtpersona.getRowCount(); rows++) {
+                for (int cols = 0; cols < jtpersona.getColumnCount(); cols++) {
+                    pdfTable.addCell(jtpersona.getModel().getValueAt(rows, cols).toString());
+                }
+            }
+
+            document.add(pdfTable);
+            document.close();
+
+            JOptionPane.showMessageDialog(null, "El archivo PDF se generó exitosamente. Ruta: " + filePath, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al generar el archivo PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void ShowJPanel(JPanel p) {
         p.setSize(795, 640);
         p.setLocation(0, 0);
@@ -167,6 +214,7 @@ public class Productoconsulta extends javax.swing.JPanel {
     private javax.swing.JLabel BIENVENIDOS;
     public javax.swing.JPanel content;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jtpersona;
     // End of variables declaration//GEN-END:variables
