@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Modelo/ConsultasCompra.java</file>
-            <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Modelo/compra.java</file>
-            <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Controlador/CtrlCompra.java</file>
+            <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Modelo/ConsultasVenta.java</file>
+            <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Controlador/CtrlVentas.java</file>
+            <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Modelo/Venta.java</file>
+            <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Vista/Dashboard.java</file>
             <file>file:/C:/Users/kofix/Downloads/proyecto/CRUD/src/Vista/Compras.java</file>
         </group>
     </open-files>

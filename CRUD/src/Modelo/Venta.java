@@ -8,7 +8,16 @@ public class Venta {
     private int idEmpleado;
     private int cantidad;
     private double total;
+    private int cantidadProductos;
 
+    public int getCantidadProductos() {
+        return cantidadProductos;
+    }
+
+    public void setCantidadProductos(int cantidadProductos) {
+        this.cantidadProductos = cantidadProductos;
+    }
+    
     public int getIdVenta() {
         return idVenta;
     }

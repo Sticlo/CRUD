@@ -27,9 +27,10 @@ public class CtrlProducto implements ActionListener {
         this.frm.btnLimpiar.addActionListener(this);
 
         // Agregar los items al ComboBox de categoría
-        frm.cmbCategoria.addItem("Categoría 1");
-        frm.cmbCategoria.addItem("Categoría 2");
-        frm.cmbCategoria.addItem("Categoría 3");
+        frm.cmbCategoria.addItem("TECLADO");
+        frm.cmbCategoria.addItem("MOUSE");
+        frm.cmbCategoria.addItem("PANTALLA");
+        
 
         // Manejar el evento de selección de categoría
         frm.cmbCategoria.addActionListener(new ActionListener() {
@@ -136,18 +137,18 @@ public class CtrlProducto implements ActionListener {
         frm.cmbSubcategoria.removeAllItems();
 
         // Obtener las subcategorías correspondientes a la categoría seleccionada y agregarlas al ComboBox de subcategoría
-        if (categoriaSeleccionada.equals("Categoría 1")) {
-            frm.cmbSubcategoria.addItem("Subcategoría 1.1");
-            frm.cmbSubcategoria.addItem("Subcategoría 1.2");
-            frm.cmbSubcategoria.addItem("Subcategoría 1.3");
-        } else if (categoriaSeleccionada.equals("Categoría 2")) {
-            frm.cmbSubcategoria.addItem("Subcategoría 2.1");
-            frm.cmbSubcategoria.addItem("Subcategoría 2.2");
-            frm.cmbSubcategoria.addItem("Subcategoría 2.3");
-        } else if (categoriaSeleccionada.equals("Categoría 3")) {
-            frm.cmbSubcategoria.addItem("Subcategoría 3.1");
-            frm.cmbSubcategoria.addItem("Subcategoría 3.2");
-            frm.cmbSubcategoria.addItem("Subcategoría 3.3");
+        if (categoriaSeleccionada.equals("TECLADO")) {
+            frm.cmbSubcategoria.addItem("GAMER");
+            frm.cmbSubcategoria.addItem("OFICINA");
+            frm.cmbSubcategoria.addItem("CORPORATIVO");
+        } else if (categoriaSeleccionada.equals("MOUSE")) {
+            frm.cmbSubcategoria.addItem("GAMER");
+            frm.cmbSubcategoria.addItem("OFICINA");
+            frm.cmbSubcategoria.addItem("CORPORATIVO");
+        } else if (categoriaSeleccionada.equals("PANTALLA")) {
+            frm.cmbSubcategoria.addItem("MONITOR");
+            frm.cmbSubcategoria.addItem("TV");
+            frm.cmbSubcategoria.addItem("VIDEO BEAM");
         }
     }
 

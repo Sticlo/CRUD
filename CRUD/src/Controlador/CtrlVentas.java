@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import Modelo.ConsultasProducto;
@@ -52,8 +48,13 @@ public class CtrlVentas implements ActionListener {
             mod.setTotal(total);
 
             if (modC.agregarVenta(mod)) {
-                JOptionPane.showMessageDialog(null, "Venta registrada exitosamente");
-                limpiarCampos();
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Desea agregar más productos a la venta?", "Agregar productos", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    agregarProductosVenta(idVenta); // Llama al método para agregar más productos a la venta
+                } else {
+                    JOptionPane.showMessageDialog(null, "Venta registrada exitosamente");
+                    limpiarCampos();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Error al registrar la venta");
             }
@@ -119,7 +120,6 @@ public class CtrlVentas implements ActionListener {
             return producto.getPrecio();
         } else {
             // Si el producto no existe, se puede lanzar una excepción o retornar un valor predeterminado.
-            // no olvidarrrr
             return 0.0;
         }
     }
@@ -131,7 +131,6 @@ public class CtrlVentas implements ActionListener {
             return producto.getIva();
         } else {
             // Si el producto no existe, puedes manejarlo de acuerdo a tus requerimientos.
-            // Por ejemplo, podrías lanzar una excepción o retornar un valor predeterminado.
             return 0.0;
         }
     }
@@ -139,6 +138,33 @@ public class CtrlVentas implements ActionListener {
     public double calcularTotalVenta(double precio, double iva, int cantidad) {
         double total = precio * (1 + (iva / 100)) * cantidad;
         return total;
+    }
+
+    private void agregarProductosVenta(int idVenta) {
+        do {
+            String inputIdProducto = JOptionPane.showInputDialog("Ingrese el ID del producto a agregar (o deje vacío para terminar):");
+
+            // Verificar si se ingresó un ID de producto
+            if (inputIdProducto.isEmpty()) {
+                break; // Salir del bucle si no se ingresó ningún ID
+            }
+
+            String inputCantidad = JOptionPane.showInputDialog("Ingrese la cantidad del producto:");
+            try {
+                int idProducto = Integer.parseInt(inputIdProducto);
+                int cantidad = Integer.parseInt(inputCantidad);
+
+                if (modC.agregarProductoVenta(idVenta, idProducto, cantidad)) {
+                    JOptionPane.showMessageDialog(null, "Producto agregado a la venta exitosamente");
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al agregar el producto a la venta");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Formato de entrada incorrecto");
+            }
+
+        } while (true);
     }
 
     public void limpiarCampos() {
