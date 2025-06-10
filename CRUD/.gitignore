@@ -1,0 +1,4 @@
+build/
+dist/
+lib/junit-platform-console-standalone.jar
+lib/junit-jupiter-api.jar
